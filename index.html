@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VE3B & VE3BN Common Mistakes in TA - Self-Learning Tool</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, 
+                #e0fdf7 0%,      /* soft mint */
+                #dbeafe 50%,     /* soft blue */
+                #fef9c3 100%     /* pale yellow */
+            );
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+        }
+        
+        h1 {
+            color: #2563eb;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+        
+        h2 {
+            color: #3b82f6;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #93c5fd;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .category-card {
+            background: linear-gradient(135deg, #ddd6fe 0%, #bfdbfe 50%, #7dd3fc 100%);
+            color: #1e293b;
+            padding: 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+        }
+        
+        .category-card h3 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #0f172a;
+        }
+        
+        .category-card p {
+            font-size: 0.9em;
+            opacity: 0.85;
+            color: #334155;
+        }
+        
+        .exercise-item {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 12px;
+            border: 2px solid #e0e7ff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+        
+        .mistake {
+            color: #dc2626;
+            font-weight: bold;
+            padding: 10px;
+            background: #fee2e2;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: block;
+        }
+        
+        .correct {
+            color: #16a34a;
+            font-weight: bold;
+            padding: 10px;
+            background: #dcfce7;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: block;
+        }
+        
+        .quiz-option {
+            background: white;
+            border: 2px solid #bfdbfe;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .quiz-option:hover {
+            background: #eff6ff;
+            transform: translateX(5px);
+            border-color: #60a5fa;
+        }
+        
+        .quiz-option.selected {
+            background: #dbeafe;
+            color: #1e40af;
+            border-color: #3b82f6;
+        }
+        
+        .quiz-option.correct-answer {
+            background: linear-gradient(135deg, #fef9c3 0%, #d9f99d 50%, #a7f3d0 100%);
+            color: #065f46;
+            border: 2px solid #10b981;
+            font-weight: bold;
+        }
+        
+        .quiz-option.wrong-answer {
+            background: linear-gradient(135deg, #fecaca 0%, #fca5a5 50%, #f87171 100%);
+            color: #7f1d1d;
+            border: 2px solid #dc2626;
+            font-weight: bold;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #a78bfa 0%, #818cf8 50%, #60a5fa 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(139, 92, 246, 0.4);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 50%, #64748b 100%);
+            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.25);
+        }
+        
+        .btn-secondary:hover {
+            box-shadow: 0 6px 18px rgba(100, 116, 139, 0.35);
+        }
+        
+        .btn-group {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .feedback {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+        }
+        
+        .feedback.success {
+            background: linear-gradient(135deg, #fef9c3 0%, #d9f99d 50%, #a7f3d0 100%);
+            color: #065f46;
+            border: 2px solid #10b981;
+        }
+        
+        .feedback.error {
+            background: linear-gradient(135deg, #fecaca 0%, #fca5a5 50%, #f87171 100%);
+            color: #7f1d1d;
+            border: 2px solid #dc2626;
+        }
+        
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+        
+        .example-table th, .example-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .example-table th {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            color: #1e40af;
+            font-weight: bold;
+        }
+        
+        .example-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+        
+        .example-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        /* Incorrect highlighting - Light Pink */
+        .example-table td:first-child .highlight {
+            background: #fecdd3;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #be123c;
+        }
+        
+        /* Correct highlighting - Light Green */
+        .example-table td:last-child .highlight {
+            background: #bbf7d0;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #15803d;
+        }
+        
+        .key-tips {
+            background: linear-gradient(135deg, #fef9c3 0%, #fde68a 50%, #fcd34d 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid #f59e0b;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
+        }
+        
+        .key-tips h2 {
+            color: #78350f;
+            border: none;
+            margin-top: 0;
+        }
+        
+        .key-tips p {
+            color: #78350f;
+            margin: 8px 0;
+            font-size: 1.05em;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e7ff;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #a78bfa 0%, #818cf8 50%, #60a5fa 100%);
+            transition: width 0.5s;
+        }
+        
+        .spelling-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .spelling-card {
+            background: white;
+            border: 2px solid #bfdbfe;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .spelling-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        }
+        
+        .spelling-mistake {
+            color: #dc2626;
+            font-size: 1.2em;
+            text-decoration: line-through;
+            margin-bottom: 10px;
+        }
+        
+        .spelling-correct {
+            color: #16a34a;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+         .proof-word {
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 3px;
+    transition: all 0.3s;
+    display: inline-block;
+    position: relative;
+}
+
+.proof-word:hover {
+    background: #fef3c7;
+    transform: scale(1.05);
+}
+
+.proof-word.selected {
+    background: #fecdd3;
+    color: #be123c;
+    font-weight: bold;
+}
+
+.proof-word.corrected {
+    background: #bbf7d0;
+    color: #15803d;
+    font-weight: bold;
+    cursor: default;
+    text-decoration: line-through;
+    text-decoration-color: #ef4444;
+}
+
+.proof-word.corrected::after {
+    content: attr(data-correct);
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: #bbf7d0;
+    color: #15803d;
+    padding: 2px 4px;
+    border-radius: 3px;
+    text-decoration: none;
+}
+
+.proof-popup {
+    position: fixed;
+    background: white;
+    border: 3px solid #60a5fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    min-width: 280px;
+    max-width: 400px;
+    display: none;
+    /* Center the popup */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.proof-popup.active {
+    display: block;
+    animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+    from { 
+        opacity: 0; 
+        transform: scale(0.8) translateY(-20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: scale(1) translateY(0); 
+    }
+}
+
+.proof-popup-header {
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    margin: -20px -20px 15px -20px;
+    padding: 12px 20px;
+    border-radius: 9px 9px 0 0;
+    font-weight: bold;
+    color: #1e40af;
+}
+
+.proof-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 1em;
+    border: 2px solid #bfdbfe;
+    border-radius: 8px;
+    margin: 10px 0;
+    box-sizing: border-box;
+}
+
+.proof-input:focus {
+    outline: none;
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+.proof-feedback {
+    padding: 12px;
+    border-radius: 8px;
+    margin: 10px 0;
+    font-weight: bold;
+    text-align: center;
+    display: none;
+}
+
+.proof-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    display: none;
+}
+
+.proof-overlay.active {
+    display: block;
+}
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+            
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+         
+    .proof-popup {
+        min-width: 85%;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+    }
+}
+        
+/* Success Modal */
+.success-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    z-index: 2000;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    /* Properly hidden by default */
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.success-modal.active {
+    display: block !important;
+    visibility: visible;
+    opacity: 1;
+    animation: successPopIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes successPopIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.success-modal-header {
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.success-modal h2 {
+    color: #16a34a;
+    font-size: 1.8em;
+    margin: 0 0 20px 0;
+    border: none;
+    padding: 0;
+}
+
+.success-modal-checklist {
+    background: linear-gradient(135deg, #fef9c3 0%, #d9f99d 50%, #a7f3d0 100%);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.success-modal-checklist p {
+    margin: 8px 0;
+    font-size: 1.1em;
+    color: #065f46;
+    font-weight: 500;
+}
+
+.success-modal-message {
+    font-size: 1.2em;
+    color: #065f46;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.success-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1999;
+    /* Properly hidden by default */
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.success-modal-overlay.active {
+    display: block !important;
+    visibility: visible;
+    opacity: 1;
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- HOME PAGE -->
+        <div id="home" class="page active">
+            <h1>VE3B & VE3BN <br>Common Mistakes in Topic Assessment (TA)</h1>
+            <p class="subtitle">Interactive Self-Learning Tool</p>
+            
+            <p style="text-align: center; margin: 20px 0; font-size: 1.1em; color: #555;">
+                Welcome! This tool will help you identify and avoid common mistakes in your TA. 
+                Click on any category below to learn and practise.
+            </p>
+            
+            <div class="category-grid">
+                <div class="category-card" onclick="showPage('prepositions')">
+                    <h3>A) Use of Prepositions</h3>
+                    <p>Learn the correct prepositions in business contexts</p>
+                </div>
+                
+                <div class="category-card" onclick="showPage('plurality')">
+                    <h3>B) Singularity vs. Plurality</h3>
+                    <p>Master singular and plural noun forms</p>
+                </div>
+                
+                <div class="category-card" onclick="showPage('verbs')">
+                    <h3>C) Misuse of Verbs</h3>
+                    <p>Avoid verbs that distort meanings</p>
+                </div>
+                
+                <div class="category-card" onclick="showPage('modals')">
+                    <h3>D) Use of Modals</h3>
+                    <p>Choose appropriate modal verbs</p>
+                </div>
+                
+                <div class="category-card" onclick="showPage('agreement')">
+                    <h3>E) Subject-Verb Agreements</h3>
+                    <p>Ensure subjects and verbs agree</p>
+                </div>
+                
+                <div class="category-card" onclick="showPage('pronouns')">
+                    <h3>F) Unclear Pronouns</h3>
+                    <p>Use clear and accurate pronouns</p>
+                </div>
+                
+                <div class="category-card" onclick="showPage('anticipatory')">
+                    <h3>G) Anticipatory-it Structure</h3>
+                    <p>Master the "It is..." structure</p>
+                </div>
+                
+                <div class="category-card" onclick="showPage('connectives')">
+                    <h3>H) Misuse of Connectives</h3>
+                    <p>Link ideas correctly</p>
+                </div>
+                
+                <div class="category-card" onclick="showPage('collocation')">
+                    <h3>I) Collocation Pairs</h3>
+                    <p>Match words that go together</p>
+                </div>
+                
+                <div class="category-card" onclick="showPage('spelling')">
+                    <h3>J) Common Spelling Mistakes</h3>
+                    <p>Correct frequently misspelt words</p>
+                </div>
+              
+              <div class="category-card" onclick="showPage('consolidation')">
+                    <h3>K) Proofreading Challenge</h3>
+                    <p>Interactive email proofreading task</p>
+              </div>            
+            </div>
+        </div>
+
+        <!-- PAGE A: PREPOSITIONS -->
+        <div id="prepositions" class="page">
+            <h1>A) Use of Prepositions</h1>
+            <p class="subtitle">Learn to use the correct prepositions in business writing</p>
+            
+            <h2>📚 Common Examples</h2>
+            <table class="example-table">
+                <tr>
+                    <th>❌ Common Mistakes</th>
+                    <th>✅ Revised Version</th>
+                </tr>
+                <tr>
+                    <td>Thank you <span class="highlight">of</span> your email <span class="highlight">for</span> 23 July.</td>
+                    <td>Thank you <span class="highlight">for</span> your email <span class="highlight">of</span> 23 July.</td>
+                </tr>
+                <tr>
+                    <td>I would like to reply you as follows.</td>
+                    <td>I would like to reply <span class="highlight">to</span> you as follows.</td>
+                </tr>
+                <tr>
+                    <td>I would like to update you <span class="highlight">for</span> ...</td>
+                    <td>I would like to update you <span class="highlight">on</span> ...</td>
+                </tr>
+                <tr>
+                    <td>The study tour is offered <span class="highlight">from</span> a prestigious school.</td>
+                    <td>The study tour is offered <span class="highlight">by</span> a prestigious school.</td>
+                </tr>
+                <tr>
+                    <td>This venue is suitable <span class="highlight">with</span> us.</td>
+                    <td>This venue is suitable <span class="highlight">for</span> us.</td>
+                </tr>
+            </table>
+            
+            <div class="key-tips">
+                <h2>💡 Key Tips</h2>
+                <p>✓ "Thank you <strong>for</strong>" (not "of")</p>
+                <p>✓ "Update you <strong>on</strong>" (not "for")</p>
+                <p>✓ "Offered <strong>by</strong>" (not "from")</p>
+                <p>✓ "Suitable <strong>for</strong>" (not "with")</p>
+            </div>
+            
+            <h2>🎯 Interactive Practice</h2>
+            <div id="prep-quiz">
+                <div class="exercise-item">
+                    <p><strong>Question 1:</strong> Thank you _____ your quick response.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'prep', 1)">of</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'prep', 1)">for</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'prep', 1)">with</div>
+                    <div class="feedback" id="prep-feedback-1"></div>
+                </div>
+                
+                <div class="exercise-item">
+                    <p><strong>Question 2:</strong> We would like to update you _____ the latest developments.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'prep', 2)">for</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'prep', 2)">on</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'prep', 2)">with</div>
+                    <div class="feedback" id="prep-feedback-2"></div>
+                </div>
+                
+                <div class="exercise-item">
+                    <p><strong>Question 3:</strong> This programme is offered _____ a reputable organisation.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'prep', 3)">from</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'prep', 3)">by</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'prep', 3)">of</div>
+                    <div class="feedback" id="prep-feedback-3"></div>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="showPage('home')">🏠 Home</button>
+                <button class="btn" onclick="showPage('plurality')">Next: Plurality ➡️</button>
+            </div>
+        </div>
+
+        <!-- PAGE B: PLURALITY -->
+        <div id="plurality" class="page">
+            <h1>B) Singularity vs. Plurality</h1>
+            <p class="subtitle">Match singular and plural forms correctly</p>
+            
+            <h2>📚 Common Examples</h2>
+            <table class="example-table">
+                <tr>
+                    <th>❌ Common Mistakes</th>
+                    <th>✅ Revised Version</th>
+                </tr>
+                <tr>
+                    <td>After comparing the two study <span class="highlight">tour</span>, we would prefer English Immersion Tour for some <span class="highlight">reason.</span></td>
+                    <td>After comparing the two study <span class="highlight">tours</span>, we would prefer English Immersion Tour for some <span class="highlight">reasons.</span></td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">Arrangement</span> for the Accommodation</td>
+                    <td><span class="highlight">Arrangements</span> for the Accommodation</td>
+                </tr>
+                <tr>
+                    <td>If you have any <span class="highlight">question</span>, please feel free to contact us.</td>
+                    <td>If you have any <span class="highlight">questions</span>, please feel free to contact us.</td>
+                </tr>
+                <tr>
+                    <td>The venue is not spacious enough to accommodate our <span class="highlight">visitor.</span></td>
+                    <td>The venue is not spacious enough to accommodate our <span class="highlight">visitors.</span></td>
+                </tr>
+            </table>
+            
+            <div class="key-tips">
+                <h2>💡 Key Tips</h2>
+                <p>✓ When talking about "any" questions, problems, or concerns, use <strong>plural</strong> forms</p>
+                <p>✓ When comparing "two" or "several" items, use <strong>plural</strong> forms</p>
+                <p>✓ When writing about groups of people (visitors, staff, students), use <strong>plural</strong> forms</p>
+            </div>
+            
+            <h2>🎯 Interactive Practice</h2>
+            <div id="plural-quiz">
+                <div class="exercise-item">
+                    <p><strong>Question 1:</strong> If you have any _____, please contact us.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'plural', 1)">question</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'plural', 1)">questions</div>
+                    <div class="feedback" id="plural-feedback-1"></div>
+                </div>
+                
+                <div class="exercise-item">
+                    <p><strong>Question 2:</strong> We have compared the two _____ carefully.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'plural', 2)">option</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'plural', 2)">options</div>
+                    <div class="feedback" id="plural-feedback-2"></div>
+                </div>
+                
+                <div class="exercise-item">
+                    <p><strong>Question 3:</strong> The hotel can accommodate all our _____.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'plural', 3)">visitor</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'plural', 3)">visitors</div>
+                    <div class="feedback" id="plural-feedback-3"></div>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="showPage('prepositions')">⬅️ Previous</button>
+                <button class="btn btn-secondary" onclick="showPage('home')">🏠 Home</button>
+                <button class="btn" onclick="showPage('verbs')">Next: Verbs ➡️</button>
+            </div>
+        </div>
+
+        <!-- PAGE C: VERBS -->
+        <div id="verbs" class="page">
+            <h1>C) Misuse of Verbs</h1>
+            <p class="subtitle">Avoid verbs that distort meanings</p>
+            
+            <h2>📚 Common Examples</h2>
+            <table class="example-table">
+                <tr>
+                    <th>❌ Common Mistakes</th>
+                    <th>✅ Revised Version</th>
+                </tr>
+                <tr>
+                    <td>This programme <span class="highlight">is</span> exciting cultural events.</td>
+                    <td>This programme <span class="highlight">includes</span> different exciting cultural events.</td>
+                </tr>
+                <tr>
+                    <td>Hong Kong Hotel <span class="highlight">is</span> spacious multipurpose rooms.</td>
+                    <td>Hong Kong Hotel <span class="highlight">has</span> spacious multipurpose rooms.</td>
+                </tr>
+                <tr>
+                    <td>Air fryers <span class="highlight">have</span> a high cost.</td>
+                    <td>The cost of the air fryers <span class="highlight">is</span> high.</td>
+                </tr>
+                <tr>
+                    <td>Students <span class="highlight">is</span> no contact with the local people.</td>
+                    <td>Students <span class="highlight">would have</span> no contact with the local people.</td>
+                </tr>
+                <tr>
+                    <td>We could ask our Finance Department to <span class="highlight">send</span> you the deposit.</td>
+                    <td>We could ask our Finance Department to <span class="highlight">settle</span> the deposit.</td>
+                </tr>
+                <tr>
+                    <td>We could ask our Project Officer to <span class="highlight">settle</span> the number of students.</td>
+                    <td>We could ask our Project Officer to <span class="highlight">confirm</span> the number of students.</td>
+                </tr>
+            </table>
+            
+            <div class="key-tips">
+                <h2>💡 Key Tips</h2>
+                <p>✓ Use <strong>"has/have"</strong> for possession (facilities, features)</p>
+                <p>✓ Use <strong>"includes/contains"</strong> for content (events, activities)</p>
+                <p>✓ Use <strong>"settle"</strong> for payments, <strong>"confirm"</strong> for details</p>
+            </div>
+            
+            <h2>🎯 Interactive Practice</h2>
+            <div id="verb-quiz">
+                <div class="exercise-item">
+                    <p><strong>Question 1:</strong> This venue _____ excellent facilities.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'verb', 1)">is</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'verb', 1)">has</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'verb', 1)">includes</div>
+                    <div class="feedback" id="verb-feedback-1"></div>
+                </div>
+                
+                <div class="exercise-item">
+                    <p><strong>Question 2:</strong> The programme _____ various cultural activities.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'verb', 2)">is</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'verb', 2)">has</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'verb', 2)">includes</div>
+                    <div class="feedback" id="verb-feedback-2"></div>
+                </div>
+                
+                <div class="exercise-item">
+                    <p><strong>Question 3:</strong> We will _____ the deposit by next week.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'verb', 3)">settle</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'verb', 3)">send</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'verb', 3)">confirm</div>
+                    <div class="feedback" id="verb-feedback-3"></div>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="showPage('plurality')">⬅️ Previous</button>
+                <button class="btn btn-secondary" onclick="showPage('home')">🏠 Home</button>
+                <button class="btn" onclick="showPage('modals')">Next: Modals ➡️</button>
+            </div>
+        </div>
+
+        <!-- PAGE D: MODALS -->
+        <div id="modals" class="page">
+            <h1>D) Use of Modals</h1>
+            <p class="subtitle">Choose appropriate modal verbs for business communication</p>
+            
+            <h2>📚 Common Examples</h2>
+            <table class="example-table">
+                <tr>
+                    <th>❌ Common Mistakes</th>
+                    <th>✅ Revised Version</th>
+                </tr>
+                <tr>
+                    <td>We <span class="highlight">could</span> suggest China Town Hall.</td>
+                    <td>We <span class="highlight">would</span> suggest China Town Hall.</td>
+                </tr>
+                <tr>
+                    <td>Our preference <span class="highlight">should</span> be for...</td>
+                    <td>Our preference <span class="highlight">would</span> be for...</td>
+                </tr>
+                <tr>
+                    <td>It <span class="highlight">could</span> be well liked by ...</td>
+                    <td>It <span class="highlight">would/might</span> be well liked by ...</td>
+                </tr>
+            </table>
+            
+            <div class="key-tips">
+                <h2>💡 Key Tips</h2>
+                <p>✓ Use <strong>"would"</strong> for suggestions and preferences (more definite)</p>
+                <p>✓ Use <strong>"could"</strong> for possibilities and abilities (less common in business)</p>
+                <p>✓ Use <strong>"might"</strong> for uncertain predictions</p>
+                <p>✓ Avoid <strong>"should"</strong> when expressing personal preferences</p>
+            </div>
+            
+            <h2>🎯 Interactive Practice</h2>
+            <div id="modal-quiz">
+                <div class="exercise-item">
+                    <p><strong>Question 1:</strong> We _____ recommend the Grand Hotel for the conference.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'modal', 1)">could</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'modal', 1)">would</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'modal', 1)">should</div>
+                    <div class="feedback" id="modal-feedback-1"></div>
+                </div>
+                
+                <div class="exercise-item">
+                    <p><strong>Question 2:</strong> Our preference _____ be for the morning session.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'modal', 2)">would</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'modal', 2)">could</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'modal', 2)">should</div>
+                    <div class="feedback" id="modal-feedback-2"></div>
+                </div>
+                
+                <div class="exercise-item">
+                    <p><strong>Question 3:</strong> This option _____ be favoured by senior management.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'modal', 3)">could</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'modal', 3)">might</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'modal', 3)">should</div>
+                    <div class="feedback" id="modal-feedback-3"></div>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="showPage('verbs')">⬅️ Previous</button>
+                <button class="btn btn-secondary" onclick="showPage('home')">🏠 Home</button>
+                <button class="btn" onclick="showPage('agreement')">Next: Agreement ➡️</button>
+            </div>
+        </div>
+
+        <!-- PAGE E: SUBJECT-VERB AGREEMENT -->
+        <div id="agreement" class="page">
+            <h1>E) Subject-Verb Agreements</h1>
+            <p class="subtitle">Ensure subjects and verbs agree in number</p>
+            
+            <h2>📚 Common Examples</h2>
+            <table class="example-table">
+                <tr>
+                    <th>❌ Common Mistakes</th>
+                    <th>✅ Revised Version</th>
+                </tr>
+                <tr>
+                    <td>The course <span class="highlight">cost</span> more than HKD30,000</td>
+                    <td>This course <span class="highlight">costs</span> more than HKD30,000.</td>
+                </tr>
+                <tr>
+                    <td>The programme <span class="highlight">provide</span> tailor-made learning materials.</td>
+                    <td>The programme <span class="highlight">provides</span> tailor-made learning materials.</td>
+                </tr>
+                <tr>
+                    <td>This course is taught by experienced teachers, which <span class="highlight">are</span> preferred by parents.</td>
+                    <td>This course is taught by experienced teachers, which <span class="highlight">is</span> preferred by parents.</td>
+                </tr>
+                <tr>
+                    <td>There <span class="highlight">are</span> different audio-visual equipment in the multipurpose room.</td>
+                    <td>There <span class="highlight">is</span> different audio-visual equipment in the multipurpose room.</td>
+                </tr>
+            </table>
+            
+            <div class="key-tips">
+                <h2>💡 Key Tips</h2>
+                <p>✓ Singular subjects take singular verbs: "The course <strong>costs</strong>"</p>
+                <p>✓ "Equipment" is uncountable (singular): "There <strong>is</strong> equipment"</p>
+                <p>✓ "Which" refers back to the main noun: "The course... which <strong>is</strong>"</p>
+                <p>✓ Add "-s" to verbs for third person singular (he/she/it)</p>
+            </div>
+            
+            <h2>🎯 Interactive Practice</h2>
+            <div id="agreement-quiz">
+                <div class="exercise-item">
+                    <p><strong>Question 1:</strong> The programme _____ excellent value for money.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'agreement', 1)">provide</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'agreement', 1)">provides</div>
+                    <div class="feedback" id="agreement-feedback-1"></div>
+                </div>
+                
+                <div class="exercise-item">
+                    <p><strong>Question 2:</strong> There _____ various equipment available in the room.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'agreement', 2)">is</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'agreement', 2)">are</div>
+                    <div class="feedback" id="agreement-feedback-2"></div>
+                </div>
+                
+                <div class="exercise-item">
+                    <p><strong>Question 3:</strong> The hotel _____ excellent facilities.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'agreement', 3)">have</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'agreement', 3)">has</div>
+                    <div class="feedback" id="agreement-feedback-3"></div>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="showPage('modals')">⬅️ Previous</button>
+                <button class="btn btn-secondary" onclick="showPage('home')">🏠 Home</button>
+                <button class="btn" onclick="showPage('pronouns')">Next: Pronouns ➡️</button>
+            </div>
+        </div>
+
+        <!-- PAGE F: PRONOUNS -->
+        <div id="pronouns" class="page">
+            <h1>F) Unclear Pronouns / Misuse of Pronouns</h1>
+            <p class="subtitle">Use clear and accurate pronouns</p>
+            
+            <h2>📚 Common Examples</h2>
+            <table class="example-table">
+                <tr>
+                    <th>❌ Common Mistakes</th>
+                    <th>✅ Revised Version</th>
+                </tr>
+                <tr>
+                    <td>We would prefer Writing Basics because <span class="highlight">it</span> could learn more writing skills.</td>
+                    <td>We would prefer Writing Basics because <span class="highlight">our staff</span> could learn more writing skills.</td>
+                </tr>
+                <tr>
+                    <td>First, students might have no contact with the local people. Also, <span class="highlight">they</span> might not be interested in the Indian culture.</td>
+                    <td>First, students might have no contact with the local people. Also, <span class="highlight">students</span> might not be interested in the Indian culture.</td>
+                </tr>
+                <tr>
+                    <td>Concerning the course, we would prefer Professional Presentation Skills because <span class="highlight">they</span> are popular among staff.</td>
+                    <td>Concerning the course, we would prefer Professional Presentation Skills because <span class="highlight">it</span> is popular among staff.</td>
+                </tr>
+            </table>
+            
+            <div class="key-tips">
+                <h2>💡 Key Tips</h2>
+                <p>✓ Make sure pronouns clearly refer to the correct noun</p>
+                <p>✓ Singular nouns need singular pronouns: "the course... <strong>it</strong>"</p>
+                <p>✓ Plural nouns need plural pronouns: "the courses... <strong>they</strong>"</p>
+                <p>✓ When unclear, repeat the noun instead of using a pronoun</p>
+            </div>
+            
+            <h2>🎯 Interactive Practice</h2>
+            <div id="pronoun-quiz">
+                <div class="exercise-item">
+                    <p><strong>Question 1:</strong> We prefer this course because _____ offers practical skills.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'pronoun', 1)">it</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'pronoun', 1)">they</div>
+                    <div class="feedback" id="pronoun-feedback-1"></div>
+                </div>
+                
+                <div class="exercise-item">
+                    <p><strong>Question 2:</strong> The hotels are excellent because _____ have modern facilities.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'pronoun', 2)">it</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'pronoun', 2)">they</div>
+                    <div class="feedback" id="pronoun-feedback-2"></div>
+                </div>
+                
+                <div class="exercise-item">
+                    <p><strong>Question 3:</strong> We recommend Writing Basics because _____ can develop their skills.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'pronoun', 3)">it</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'pronoun', 3)">our staff</div>
+                    <div class="feedback" id="pronoun-feedback-3"></div>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="showPage('agreement')">⬅️ Previous</button>
+                <button class="btn btn-secondary" onclick="showPage('home')">🏠 Home</button>
+                <button class="btn" onclick="showPage('anticipatory')">Next: Anticipatory-it ➡️</button>
+            </div>
+        </div>
+
+        <!-- PAGE G: ANTICIPATORY-IT -->
+        <div id="anticipatory" class="page">
+            <h1>G) Anticipatory-it Structure</h1>
+            <p class="subtitle">Master the "It is..." structure for clearer writing</p>
+            
+            <h2>📚 Common Examples</h2>
+            <table class="example-table">
+                <tr>
+                    <th>❌ Common Mistakes</th>
+                    <th>✅ Revised Version</th>
+                </tr>
+                <tr>
+                    <td><span class="highlight">Our colleagues</span> could be difficult to make arrangements.</td>
+                    <td><span class="highlight">It</span> might be difficult <span class="highlight">for our colleagues</span> to make arrangements.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">The new computers</span> are cost-effective.</td>
+                    <td><span class="highlight">It</span> is cost-effective <span class="highlight">to buy new computers.</span><br>OR<br><span class="highlight">Buying new computers</span> is cost-effective.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">Our customers</span> are important to attract.</td>
+                    <td><span class="highlight">It</span> is important <span class="highlight">to attract our customers.</span></td>
+                </tr>
+            </table>
+            
+            <div class="key-tips">
+                <h2>💡 Key Tips</h2>
+                <p>✓ Use "It is + adjective + to..." for general statements</p>
+                <p>✓ Pattern: <strong>It is [adjective] (for someone) to [do something]</strong></p>
+                <p>✓ Examples: "It is difficult to...", "It is important to...", "It is cost-effective to..."</p>
+                <p>✓ Alternative: Use gerund (-ing) as subject: "Buying computers is cost-effective"</p>
+            </div>
+            
+            <h2>🎯 Interactive Practice</h2>
+            <div id="anticipatory-quiz">
+                <div class="exercise-item">
+                    <p><strong>Question 1:</strong> Which is correct?</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'anticipatory', 1)">Our team are difficult to complete the task.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'anticipatory', 1)">It is difficult for our team to complete the task.</div>
+                    <div class="feedback" id="anticipatory-feedback-1"></div>
+                </div>
+                
+                <div class="exercise-item">
+                    <p><strong>Question 2:</strong> Which is correct?</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'anticipatory', 2)">The new system is convenient to use.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'anticipatory', 2)">It is convenient to use the new system.</div>
+                    <div class="feedback" id="anticipatory-feedback-2"></div>
+                </div>
+                
+                <div class="exercise-item">
+                    <p><strong>Question 3:</strong> Which is correct?</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'anticipatory', 3)">It is essential to meet the deadline.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'anticipatory', 3)">The deadline is essential to meet.</div>
+                    <div class="feedback" id="anticipatory-feedback-3"></div>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="showPage('pronouns')">⬅️ Previous</button>
+                <button class="btn btn-secondary" onclick="showPage('home')">🏠 Home</button>
+                <button class="btn" onclick="showPage('connectives')">Next: Connectives ➡️</button>
+            </div>
+        </div>
+
+        <!-- PAGE H: CONNECTIVES -->
+        <div id="connectives" class="page">
+            <h1>H) Misuse of Connectives</h1>
+            <p class="subtitle">Link ideas correctly in business writing</p>
+            
+            <h2>📚 Common Examples</h2>
+            <table class="example-table">
+                <tr>
+                    <th>❌ Common Mistakes</th>
+                    <th>✅ Revised Version</th>
+                </tr>
+                <tr>
+                    <td>We would prefer Hong Kong Airlines <span class="highlight">because</span> they have a good reputation <span class="highlight">so</span> it is favoured by our management.</td>
+                    <td>We would prefer Hong Kong Airlines because they have a good reputation<span class="highlight">. It</span> is favoured by our management.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">Although</span> a high cost might be incurred, <span class="highlight">but</span> the course content is useful for our staff at work.</td>
+                    <td>Although a high cost might be incurred, the course content is useful for our staff at work.</td>
+                </tr>
+                <tr>
+                    <td>Similar courses were given before, <span class="highlight">so</span> they are not practical.</td>
+                    <td>Similar courses were given before. <span class="highlight">Also</span>, they are not practical.</td>
+                </tr>
+            </table>
+            
+            <div class="key-tips">
+                <h2>💡 Key Tips</h2>
+                <p>✓ Don't use "because" and "so" together - choose one</p>
+                <p>✓ Don't use "although" and "but" together - choose one</p>
+                <p>✓ Use a full stop to separate independent ideas</p>
+                <p>✓ Use "Also" or "Furthermore" to add supporting ideas</p>
+            </div>
+            
+            <h2>🎯 Interactive Practice</h2>
+            <div id="connective-quiz">
+                <div class="exercise-item">
+                    <p><strong>Question 1:</strong> Which is correct?</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'connective', 1)">Although the price is high, but the quality is excellent.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'connective', 1)">Although the price is high, the quality is excellent.</div>
+                    <div class="feedback" id="connective-feedback-1"></div>
+                </div>
+                
+                <div class="exercise-item">
+                    <p><strong>Question 2:</strong> Which is correct?</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'connective', 2)">We chose this venue because it has excellent facilities. It is also close to the MTR.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'connective', 2)">We chose this venue because it has excellent facilities so it is also close to the MTR.</div>
+                    <div class="feedback" id="connective-feedback-2"></div>
+                </div>
+                
+                <div class="exercise-item">
+                    <p><strong>Question 3:</strong> Which is correct?</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'connective', 3)">The course was offered before, so it is not suitable.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'connective', 3)">The course was offered before. Also, it is not suitable.</div>
+                    <div class="feedback" id="connective-feedback-3"></div>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="showPage('anticipatory')">⬅️ Previous</button>
+                <button class="btn btn-secondary" onclick="showPage('home')">🏠 Home</button>
+                <button class="btn" onclick="showPage('collocation')">Next: Collocation ➡️</button>
+            </div>
+        </div>
+
+        <!-- PAGE I: COLLOCATION -->
+        <div id="collocation" class="page">
+            <h1>I) Collocation Pairs</h1>
+            <p class="subtitle">Match words that naturally go together</p>
+            
+            <h2>📚 Common Examples</h2>
+            <table class="example-table">
+                <tr>
+                    <th>❌ Common Mistakes</th>
+                    <th>✅ Revised Version</th>
+                </tr>
+                <tr>
+                    <td>The <span class="highlight">price</span> of the tablets is <span class="highlight">expensive.</span></td>
+                    <td>
+                        • The <span class="highlight">price</span> of the tablets is <span class="highlight">high.</span><br>
+                        • The <span class="highlight">tablets</span> are <span class="highlight">expensive.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>The course content is <span class="highlight">funny.</span></td>
+                    <td>The course content is <span class="highlight">interesting.</span></td>
+                </tr>
+                <tr>
+                    <td>We suggest <span class="highlight">sending</span> souvenirs.</td>
+                    <td>We suggest <span class="highlight">giving</span> souvenirs.</td>
+                </tr>
+            </table>
+            
+            <div class="key-tips">
+                <h2>💡 Key Tips</h2>
+                <p>✓ <strong>Price</strong> is "high" or "low" (NOT expensive/cheap)</p>
+                <p>✓ <strong>Items</strong> are "expensive" or "cheap" (NOT high/low)</p>
+                <p>✓ Use <strong>"interesting"</strong> for educational content (NOT funny)</p>
+                <p>✓ We <strong>"give"</strong> souvenirs (NOT send)</p>
+            </div>
+            
+            <h2>🎯 Interactive Practice</h2>
+            <div id="collocation-quiz">
+                <div class="exercise-item">
+                    <p><strong>Question 1:</strong> The price of the hotel is _____.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'collocation', 1)">high</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'collocation', 1)">expensive</div>
+                    <div class="feedback" id="collocation-feedback-1"></div>
+                </div>
+                
+                <div class="exercise-item">
+                    <p><strong>Question 2:</strong> The programme content is _____.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'collocation', 2)">funny</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'collocation', 2)">interesting</div>
+                    <div class="feedback" id="collocation-feedback-2"></div>
+                </div>
+                
+                <div class="exercise-item">
+                    <p><strong>Question 3:</strong> We would like to _____ souvenirs to all participants.</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'collocation', 3)">give</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'collocation', 3)">send</div>
+                    <div class="feedback" id="collocation-feedback-3"></div>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="showPage('connectives')">⬅️ Previous</button>
+                <button class="btn btn-secondary" onclick="showPage('home')">🏠 Home</button>
+                <button class="btn" onclick="showPage('spelling')">Next: Spelling ➡️</button>
+            </div>
+        </div>
+
+        <!-- PAGE J: SPELLING -->
+        <div id="spelling" class="page">
+            <h1>J) Common Spelling Mistakes</h1>
+            <p class="subtitle">Correct frequently misspelt words</p>
+            
+            <div class="key-tips">
+                <h2>⚠️ Important Note</h2>
+                <p style="font-size: 1.1em;">Please write clearly, especially when it comes to: <strong>a, o, t, e, f, c</strong></p>
+            </div>
+            
+            <h2>📚 Common Spelling Errors</h2>
+            
+            <div class="spelling-grid">
+                <div class="spelling-card">
+                    <div class="spelling-mistake">Fist / Frist</div>
+                    <div class="spelling-correct">First</div>
+                    <p style="margin-top: 10px; color: #666; font-size: 0.9em;">1st</p>
+                </div>
+                
+                <div class="spelling-card">
+                    <div class="spelling-mistake">Beside</div>
+                    <div class="spelling-correct">Besides</div>
+                    <p style="margin-top: 10px; color: #666; font-size: 0.9em;">Also</p>
+                </div>
+                
+                <div class="spelling-card">
+                    <div class="spelling-mistake">Futhermore</div>
+                    <div class="spelling-correct">Furthermore</div>
+                    <p style="margin-top: 10px; color: #666; font-size: 0.9em;">Also</p>
+                </div>
+                
+                <div class="spelling-card">
+                    <div class="spelling-mistake">Perfer</div>
+                    <div class="spelling-correct">Prefer</div>
+                    <p style="margin-top: 10px; color: #666; font-size: 0.9em;">To like/choose</p>
+                </div>
+                
+                <div class="spelling-card">
+                    <div class="spelling-mistake">Prefered</div>
+                    <div class="spelling-correct">Preferred</div>
+                    <p style="margin-top: 10px; color: #666; font-size: 0.9em;">Liked/Chosen</p>
+                </div>
+                
+                <div class="spelling-card">
+                    <div class="spelling-mistake">In addion</div>
+                    <div class="spelling-correct">In addition</div>
+                    <p style="margin-top: 10px; color: #666; font-size: 0.9em;">Also</p>
+                </div>
+                
+                <div class="spelling-card">
+                    <div class="spelling-mistake">Mere</div>
+                    <div class="spelling-correct">More</div>
+                    <p style="margin-top: 10px; color: #666; font-size: 0.9em;">A larger amount</p>
+                </div>
+                
+                <div class="spelling-card">
+                    <div class="spelling-mistake">Funtion</div>
+                    <div class="spelling-correct">Function</div>
+                    <p style="margin-top: 10px; color: #666; font-size: 0.9em;">Event</p>
+                </div>
+                
+                <div class="spelling-card">
+                    <div class="spelling-mistake">Reponse</div>
+                    <div class="spelling-correct">Response</div>
+                    <p style="margin-top: 10px; color: #666; font-size: 0.9em;">An answer</p>
+                </div>
+                
+                <div class="spelling-card">
+                    <div class="spelling-mistake">Leter</div>
+                    <div class="spelling-correct">Letter</div>
+                    <p style="margin-top: 10px; color: #666; font-size: 0.9em;">Written message</p>
+                </div>
+                
+                <div class="spelling-card">
+                    <div class="spelling-mistake">Affer</div>
+                    <div class="spelling-correct">After</div>
+                    <p style="margin-top: 10px; color: #666; font-size: 0.9em;">Opposite of "before"</p>
+                </div>
+                
+                <div class="spelling-card">
+                    <div class="spelling-mistake">Comfirm</div>
+                    <div class="spelling-correct">Confirm</div>
+                    <p style="margin-top: 10px; color: #666; font-size: 0.9em;">To say "yes"</p>
+                </div>
+            </div>
+            
+            <h2>🎯 Interactive Practice</h2>
+            <div id="spelling-quiz">
+                <div class="exercise-item">
+                    <p><strong>Question 1:</strong> Choose the correct spelling:</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'spelling', 1)">futhermore</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'spelling', 1)">furthermore</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'spelling', 1)">furtheremore</div>
+                    <div class="feedback" id="spelling-feedback-1"></div>
+                </div>
+                
+                <div class="exercise-item">
+                    <p><strong>Question 2:</strong> Choose the correct spelling:</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'spelling', 2)">prefered</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'spelling', 2)">preferred</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'spelling', 2)">prefferred</div>
+                    <div class="feedback" id="spelling-feedback-2"></div>
+                </div>
+                
+                <div class="exercise-item">
+                    <p><strong>Question 3:</strong> Choose the correct spelling:</p>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'spelling', 3)">reponse</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 'spelling', 3)">responce</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 'spelling', 3)">response</div>
+                    <div class="feedback" id="spelling-feedback-3"></div>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+    <button class="btn btn-secondary" onclick="showPage('collocation')">⬅️ Previous</button>
+    <button class="btn btn-secondary" onclick="showPage('home')">🏠 Home</button>
+    <button class="btn" onclick="showPage('consolidation')">Next: Proofreading ➡️</button>
+</div>
+        </div>
+     <!-- PAGE K: INTERACTIVE PROOFREADING -->
+<div id="consolidation" class="page">
+    <h1>K) Interactive Proofreading</h1>
+    <p class="subtitle">Click mistakes → Correct them instantly on the spot!</p>
+    
+    <div class="key-tips">
+        <h2>🎯 Instructions</h2>
+        <p><strong>Step 1:</strong> Click on words/phrases that look incorrect.</p>
+        <p><strong>Step 2:</strong> A correction box appears - type the correct version.</p>
+        <p><strong>Step 3:</strong> Press Enter or click "Check" for instant feedback!</p>
+        <p><strong>Goal:</strong> Find and correct all 15 mistakes.</p>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress-fill" id="proof-progress" style="width: 0%"></div>
+    </div>
+    <p style="text-align: center; margin: 10px 0; font-weight: bold; color: #3b82f6;" id="proof-score">Progress: 0/15 mistakes corrected</p>
+
+    <h2>📧 Email for Proofreading</h2>
+    <div class="exercise-item" id="proof-email" style="line-height: 2; font-size: 1em;">
+        <p><strong>Subject:</strong> Coffee Supplies Order - Our Preferences</p>
+        <br>
+        <p>Dear Ms Lam</p>
+        <br>
+        <p>
+            Thank you <span class="proof-word" data-correct="for" data-error="preposition">of</span> your email 
+            <span class="proof-word" data-correct="of" data-error="preposition">for</span> 23 July regarding the arrangements for the coffee supplies.
+        </p>
+        <br>
+        <p>
+            After comparing the two <span class="proof-word" data-correct="options" data-error="plurality">option</span>, 
+            our preference would be for coffee beans because <span class="proof-word" data-correct="they" data-error="pronoun">it</span> 
+            can provide more <span class="proof-word" data-correct="benefits" data-error="plurality">benefit</span> to our colleagues.
+        </p>
+        <br>
+        <p>
+            Coffee beans <span class="proof-word" data-correct="provide" data-error="agreement">provides</span> the advantage of being freshly ground before brewing. 
+            This can ensure a rich and aromatic flavour.
+        </p>
+        <br>
+        <p>
+            In addition, coffee beans <span class="proof-word" data-correct="come" data-error="agreement">comes</span> in a wide range of origins and flavours, 
+            which <span class="proof-word" data-correct="allows" data-error="agreement">allow</span> us to offer a diverse selection that 
+            <span class="proof-word" data-correct="caters" data-error="agreement">cater</span> to different customer 
+            <span class="proof-word" data-correct="preferences" data-error="plurality">preference</span>.
+        </p>
+        <br>
+        <p>
+            On the other hand, canned coffee would not be preferred since it takes up too much 
+            <span class="proof-word" data-correct="space" data-error="plurality">spaces</span>, which could be used for other 
+            <span class="proof-word" data-correct="purposes" data-error="plurality">purpose</span>.
+        </p>
+        <br>
+        <p>
+            Furthermore, canned coffee usually <span class="proof-word" data-correct="has" data-error="agreement">have</span> a limited selection of flavours compared to coffee beans. 
+            Also, the <span class="proof-word" data-correct="price" data-error="collocation">cost</span> of canned coffee 
+            <span class="proof-word" data-correct="is high" data-error="collocation">are expensive</span>.
+        </p>
+        <br>
+        <p>
+            Concerning the ordering method, we <span class="proof-word" data-correct="would" data-error="modal">could</span> suggest emailing the order form to us monthly since it is convenient.
+        </p>
+        <br>
+        <p>
+            Please do not hesitate to contact us if you need any <span class="proof-word" data-correct="further" data-error="spelling">futhermore</span> information.
+        </p>
+        <br>
+        <p>
+            Best regards<br>
+            Robert Cheung<br>
+            Administrative Officer
+        </p>
+    </div>
+
+    <div class="btn-group">
+        <button class="btn btn-secondary" onclick="showPage('spelling')">⬅️ Previous</button>
+        <button class="btn btn-secondary" onclick="showPage('home')">🏠 Home</button>
+    </div>
+</div>
+      </div>
+         
+    <!-- Popup correction box -->
+    <div class="proof-overlay" id="proof-overlay"></div>
+    <div class="proof-popup" id="proof-popup">
+        <div class="proof-popup-header">
+            ❌ Mistake: <span id="selected-word" style="color: #dc2626;"></span>
+        </div>
+        <p style="margin: 10px 0; font-size: 0.95em; color: #666;">Type the correct word/phrase:</p>
+        <input type="text" class="proof-input" id="proof-input" placeholder="Your correction here..." autocomplete="off">
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <button class="btn" onclick="checkProofCorrection()" style="flex: 1;">Check Answer ✓</button>
+            <button class="btn btn-secondary" onclick="cancelProofSelection()" style="flex: 1;">Cancel</button>
+        </div>
+        <div class="proof-feedback" id="proof-feedback"></div>
+    </div>    
+  </div>
+  
+  <!-- Success Modal (outside container) -->
+<div class="success-modal-overlay" id="success-overlay"></div>
+<div class="success-modal" id="success-modal">
+    <div class="success-modal-header">🎉</div>
+    <h2>AMAZING! <br>You corrected all 15 mistakes!</h2>
+    
+    <div class="success-modal-checklist">
+        <p>✓ Prepositions</p>
+        <p>✓ Plurality</p>
+        <p>✓ Pronouns</p>
+        <p>✓ Subject-Verb Agreement</p>
+        <p>✓ Modals</p>
+        <p>✓ Collocations</p>
+        <p>✓ Spelling</p>
+    </div>
+    
+    <p class="success-modal-message">You are ready for the assessment!</p>
+    
+    <button class="btn" onclick="closeSuccessModal()" style="margin-top: 20px; font-size: 1.1em; padding: 15px 40px;">Awesome! ✨</button>
+</div>
+  </div>
+  
+    <script>
+        let answeredQuestions = {};
+        
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            const targetPage = document.getElementById(pageId);
+            targetPage.classList.add('active');
+            
+            window.scrollTo(0, 0);
+        }
+        
+        function checkAnswer(element, isCorrect, category, questionNum) {
+            const feedbackId = `${category}-feedback-${questionNum}`;
+            const questionKey = `${category}-${questionNum}`;
+            
+            if (answeredQuestions[questionKey]) {
+                return;
+            }
+            
+            const allOptions = element.parentElement.querySelectorAll('.quiz-option');
+            allOptions.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+            
+            const feedback = document.getElementById(feedbackId);
+            
+            if (isCorrect) {
+                element.classList.add('correct-answer');
+                feedback.textContent = '✅ Excellent! That\'s correct!';
+                feedback.className = 'feedback success';
+                feedback.style.display = 'block';
+                
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            } else {
+                element.classList.add('wrong-answer');
+                feedback.textContent = '❌ Not quite. Try to review the examples above.';
+                feedback.className = 'feedback error';
+                feedback.style.display = 'block';
+                
+                allOptions.forEach(opt => {
+                    const correctAttr = opt.getAttribute('onclick');
+                    if (correctAttr && correctAttr.includes('true')) {
+                        setTimeout(() => {
+                            opt.classList.add('correct-answer');
+                        }, 1000);
+                    }
+                });
+            }
+            
+            answeredQuestions[questionKey] = true;
+        }
+        
+        window.addEventListener('load', function() {
+            confetti({
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.5 }
+            });
+        });
+    let proofProgress = 0;
+let totalProofMistakes = 15;
+let currentSelectedWord = null;
+
+// Proof word click handling
+document.addEventListener('click', function(e) {
+    // If clicking on a mistake word
+    if (e.target.classList.contains('proof-word') && !e.target.classList.contains('corrected')) {
+        currentSelectedWord = e.target;
+        openProofPopup(currentSelectedWord);
+        return; // Use return instead of stopPropagation
+    }
+    
+    // Close popup if clicking overlay (but not the popup itself)
+    if (e.target.id === 'proof-overlay') {
+        cancelProofSelection();
+    }
+});
+
+// Popup opening function
+function openProofPopup(target) {
+    const popup = document.getElementById('proof-popup');
+    const overlay = document.getElementById('proof-overlay');
+    
+    document.getElementById('selected-word').textContent = target.textContent;
+    document.getElementById('proof-input').value = '';
+    
+    const feedback = document.getElementById('proof-feedback');
+    feedback.style.display = 'none';
+    
+    overlay.classList.add('active');
+    popup.classList.add('active');
+    
+    setTimeout(() => {
+        document.getElementById('proof-input').focus();
+    }, 100);
+}
+    
+    // Popup overlay click handling
+document.getElementById('proof-overlay').addEventListener('click', function(e) {
+    if (currentSelectedWord) {
+        cancelProofSelection();
+    }
+});
+
+// Cancel the selection behavior, resetting the popup
+function cancelProofSelection() {
+    document.getElementById('proof-popup').classList.remove('active');
+    document.getElementById('proof-overlay').classList.remove('active');
+    currentSelectedWord = null;
+
+    // Clear the popup content
+    document.getElementById('selected-word').textContent = '';
+    document.getElementById('proof-input').value = '';
+    document.getElementById('proof-feedback').style.display = 'none';
+}
+
+function checkProofCorrection() {
+    if (!currentSelectedWord) return;
+    
+    const userAnswer = document.getElementById('proof-input').value.trim().toLowerCase();
+    const correctAnswer = currentSelectedWord.getAttribute('data-correct').toLowerCase();
+    const feedback = document.getElementById('proof-feedback');
+    
+    if (userAnswer === correctAnswer) {
+        currentSelectedWord.classList.add('corrected');
+        
+        feedback.textContent = '✅ Perfect! Well done!';
+        feedback.className = 'proof-feedback success';
+        feedback.style.display = 'block';
+        
+        proofProgress++;
+        updateProofProgress();
+        
+        confetti({
+            particleCount: 50,
+            spread: 60,
+            origin: { y: 0.6 }
+        });
+        
+        setTimeout(() => {
+            cancelProofSelection();
+            
+           if (proofProgress === totalProofMistakes) {
+    setTimeout(() => {
+        confetti({
+            particleCount: 200,
+            spread: 100,
+            origin: { y: 0.5 }
+        });
+        showSuccessModal();
+    }, 500);
+}
+        }, 1500);
+        
+    } else {
+        feedback.textContent = '❌ Not quite. Check the error type: ' + currentSelectedWord.getAttribute('data-error');
+        feedback.className = 'proof-feedback error';
+        feedback.style.display = 'block';
+    }
+}
+
+function updateProofProgress() {
+    const percentage = (proofProgress / totalProofMistakes) * 100;
+    document.getElementById('proof-progress').style.width = percentage + '%';
+    document.getElementById('proof-score').textContent = `Progress: ${proofProgress}/${totalProofMistakes} mistakes corrected`;
+}
+
+// Allow Enter key to submit
+document.addEventListener('DOMContentLoaded', function() {
+    const proofInput = document.getElementById('proof-input');
+    if (proofInput) {
+        proofInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkProofCorrection();
+            }
+        });
+    }
+});
+      function showSuccessModal() {
+    document.getElementById('success-overlay').classList.add('active');
+    document.getElementById('success-modal').classList.add('active');
+}
+
+function closeSuccessModal() {
+    document.getElementById('success-overlay').classList.remove('active');
+    document.getElementById('success-modal').classList.remove('active');
+}
+    </script>
+</body>
+</html>
